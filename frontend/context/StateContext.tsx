@@ -41,6 +41,7 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
   const [totalQty, setTotalQty] = useState<number>(0);
 
   useEffect(() => {
+    if (user === null) getUser();
     if (!cartItems) return;
 
     const sum = cartItems.reduce((prev: number, cur: Product): number => {
@@ -61,10 +62,6 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
 
     if (userRes) setUser(userRes);
   };
-
-  useEffect(() => {
-    if (user === null) getUser();
-  }, []);
 
   const clearCart = (): void => {
     setCartItems([]);

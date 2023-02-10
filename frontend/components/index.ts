@@ -17,3 +17,5 @@ export { default as ConfirmModal } from './ConfirmModal';
 export { default as DeliveryCard } from './DeliveryCard';
 export { default as Delivery } from './Delivery';
 export { default as WhatIsNew } from './WhatIsNew';
+export { default as MobileNavbar } from './MobileNavbar';
+export { default as DesktopNavbar } from './DesktopNavbar';

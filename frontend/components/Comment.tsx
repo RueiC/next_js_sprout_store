@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { RiDoubleQuotesL } from 'react-icons/ri';
 import { AiFillStar, AiFillDelete } from 'react-icons/ai';
-import { m } from 'framer-motion';
 
 import { CommentType } from '../types';
 import { useStateContext } from '../context/StateContext';
@@ -24,12 +23,7 @@ const Comment = (props: CommentProps) => {
   return (
     <>
       {props?.comment ? (
-        <m.div
-          className='relative flex w-full h-[16.8rem] rounded-[2rem] bg-white px-[4rem] py-[2.5rem]'
-          whileInView={{ opacity: [0, 1], y: [100, 0] }}
-          transition={{ duration: 0.4, delayChildren: 0.3 }}
-          key={props._key}
-        >
+        <div className='relative flex w-full h-[16.8rem] rounded-[2rem] bg-white px-[4rem] py-[2.5rem]'>
           <div className='flex items-center gap-[4rem]'>
             <img
               className='rounded-full w-[10rem] h-[10rem] shadow-lg'
@@ -78,7 +72,7 @@ const Comment = (props: CommentProps) => {
               </div>
             ) : null}
           </div>
-        </m.div>
+        </div>
       ) : null}
     </>
   );
