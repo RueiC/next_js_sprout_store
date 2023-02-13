@@ -100,19 +100,20 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
   const updateCart = (product: Product, qty: number): void => {
     if (!product || !qty) return;
 
+    const newProduct = JSON.parse(JSON.stringify(product));
     // set item qty
-    product.qty = product.qty + qty;
+    newProduct.qty = newProduct.qty + qty;
 
     // set totalQty
     setTotalQty((prevTotalQty) => prevTotalQty + qty);
 
     // filter old cartItems
     const newCartItems: Product[] = cartItems.filter(
-      (cartItem) => cartItem._id !== product._id,
+      (cartItem) => cartItem._id !== newProduct._id,
     );
 
     // new cartItems
-    newCartItems.push({ ...product });
+    newCartItems.push({ ...newProduct });
 
     // push Item
     setCartItems(newCartItems);
@@ -132,24 +133,25 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
   const updateQty = (product: Product, amount: number): void => {
     if (product.qty < 0) return;
 
+    const newProduct = JSON.parse(JSON.stringify(product));
     // update item qty
-    product.qty = product.qty + amount;
+    newProduct.qty = newProduct.qty + amount;
 
     // set totalQty
     setTotalQty((prevTotalQty: number) => prevTotalQty + amount);
 
     // filter old cartItems
     const newCartItems: Product[] = cartItems.filter(
-      (cartItem) => cartItem._id !== product._id,
+      (cartItem) => cartItem._id !== newProduct._id,
     );
 
-    if (product.qty === 0) {
+    if (newProduct.qty === 0) {
       setCartItems(newCartItems);
       return;
     }
 
     // new cartItems
-    newCartItems.push({ ...product });
+    newCartItems.push({ ...newProduct });
 
     // push Item
     setCartItems(newCartItems);
