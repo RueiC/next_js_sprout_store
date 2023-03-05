@@ -28,6 +28,10 @@ interface defaultValue {
   setShowCart: Dispatch<SetStateAction<boolean>>;
   setUser: Dispatch<React.SetStateAction<User | null>>;
   getUser: () => Promise<void>;
+  // eslint-disable-next-line no-unused-vars
+  calcTotalPrice: (items: Product[]) => void;
+  // eslint-disable-next-line no-unused-vars
+  calcTotalQty: (items: Product[]) => void;
 }
 
 const Context = createContext({} as defaultValue);
@@ -56,8 +60,8 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
     if (newItems.length) setCartItems(newItems);
   }, []);
 
-  const calcTotalPrice = (cartItems) => {
-    const sum = cartItems.reduce((prev: number, cur: Product): number => {
+  const calcTotalPrice = (items: Product[]): void => {
+    const sum = items.reduce((prev: number, cur: Product): number => {
       if (cur.isDiscount) {
         return prev + cur!.discountPrice! * cur.qty;
       } else {
@@ -68,15 +72,15 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
     setTotalPrice(sum);
   };
 
-  const calcTotalQty = (cartItems) => {
-    const sum = cartItems.reduce((prev: number, cur: Product): number => {
+  const calcTotalQty = (items: Product[]): void => {
+    const sum = items.reduce((prev: number, cur: Product): number => {
       return prev + cur.qty;
     }, 0);
 
     setTotalQty(sum);
   };
 
-  const handleLocalstorage = (items) => {
+  const handleLocalstorage = (items: Product[]): void => {
     const storedItems = JSON.stringify(items);
     localStorage.setItem('sprout_shopping_cart', storedItems);
   };

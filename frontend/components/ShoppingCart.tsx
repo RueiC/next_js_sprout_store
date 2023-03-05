@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 
 import { useStateContext } from '../context/StateContext';
 import CartItem from './CartItem';
 import { AiFillCloseCircle } from 'react-icons/ai';
 
-const ShoppingCart = ({ mode }) => {
+const ShoppingCart = ({ mode }: { mode: string }) => {
   const { cartItems, totalPrice, setShowCart } = useStateContext();
   const router = useRouter();
 
