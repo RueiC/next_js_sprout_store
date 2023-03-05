@@ -42,8 +42,21 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (user === null) getUser();
-    if (!cartItems) return;
 
+    calcTotalPrice(cartItems);
+    calcTotalQty(cartItems);
+    handleLocalstorage(cartItems);
+  }, [cartItems]);
+
+  useEffect(() => {
+    const storedItems = localStorage.getItem('sprout_shopping_cart');
+    if (!storedItems) return;
+
+    const newItems = JSON.parse(storedItems);
+    if (newItems.length) setCartItems(newItems);
+  }, []);
+
+  const calcTotalPrice = (cartItems) => {
     const sum = cartItems.reduce((prev: number, cur: Product): number => {
       if (cur.isDiscount) {
         return prev + cur!.discountPrice! * cur.qty;
@@ -53,7 +66,20 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
     }, 0);
 
     setTotalPrice(sum);
-  }, [cartItems]);
+  };
+
+  const calcTotalQty = (cartItems) => {
+    const sum = cartItems.reduce((prev: number, cur: Product): number => {
+      return prev + cur.qty;
+    }, 0);
+
+    setTotalQty(sum);
+  };
+
+  const handleLocalstorage = (items) => {
+    const storedItems = JSON.stringify(items);
+    localStorage.setItem('sprout_shopping_cart', storedItems);
+  };
 
   const getUser = async () => {
     const userRes = await axios
@@ -65,6 +91,7 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
 
   const clearCart = (): void => {
     setCartItems([]);
+    handleLocalstorage([]);
     setQty(1);
     setTotalPrice(0);
     setTotalQty(0);
@@ -91,7 +118,10 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
     setTotalQty((prevTotalQty) => prevTotalQty + qty);
 
     // push Item
-    setCartItems((prevItems) => [{ ...product }, ...prevItems]);
+    setCartItems((prevItems) => {
+      const newItems = [{ ...product }, ...prevItems];
+      return newItems;
+    });
 
     // clear Qty
     setQty(1);
@@ -174,6 +204,8 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
         clearCart,
         setUser,
         getUser,
+        calcTotalPrice,
+        calcTotalQty,
       }}
     >
       {children}

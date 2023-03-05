@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { useStateContext } from '../context/StateContext';
 import CartItem from './CartItem';
 import { AiFillCloseCircle } from 'react-icons/ai';
 
-const ShoppingCart = ({ mode }: { mode: string }) => {
+const ShoppingCart = ({ mode }) => {
   const { cartItems, totalPrice, setShowCart } = useStateContext();
   const router = useRouter();
 
@@ -17,7 +17,7 @@ const ShoppingCart = ({ mode }: { mode: string }) => {
           : 'top-[7rem] right-0 w-[50rem] rounded-[1.5rem] shadow-md'
       }`}
     >
-      {cartItems.length > 0 ? (
+      {cartItems?.length > 0 ? (
         <>
           {cartItems.map((item) => (
             <CartItem item={item} key={item._id} />

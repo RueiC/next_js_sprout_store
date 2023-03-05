@@ -28,7 +28,8 @@ const DesktopNavbar = ({
   submitSearch,
   logout,
 }: Props) => {
-  const { user, showCart, setShowCart, totalQty, getUser } = useStateContext();
+  const { user, cartItems, showCart, setShowCart, totalQty, getUser } =
+    useStateContext();
   const stickNavStyle = useScroll();
 
   return (

@@ -59,9 +59,9 @@ const Browse: NextPage<Props> = ({ data }) => {
 
     const filteredValue = amounts.find((item) => item.value === value)!;
 
-    if (checked && filteredValue.name !== '不限') {
-      setAmountOption(filteredValue.value);
-    } else if (checked && filteredValue.name === '不限') {
+    if (checked && filteredValue?.name) {
+      setAmountOption(filteredValue?.value);
+    } else if (checked && !filteredValue?.name) {
       setAmountOption('');
     }
   };
@@ -73,6 +73,12 @@ const Browse: NextPage<Props> = ({ data }) => {
     searchQuery,
     setProducts,
   });
+
+  useEffect(() => {
+    if (!countryOption.length) {
+      setCountryOption(['不限']);
+    }
+  }, [countryOption]);
 
   useEffect(() => {
     if (!router) return;
