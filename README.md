@@ -11,9 +11,11 @@ Website Demo - https://next-js-sprout-store.vercel.app
 4. 學習CRUD的實作
 
 【收穫】
+
 在這個專案中收穫最多的是，學習到了如何使用Context API來解決Components共享States的問題，以及混用SSG以及CSR來解決不同問題。
 
 【使用技術】
+
 這項專案中使用了：Next.js / Typescript / Formik / Tailwind CSS / Sanity / Stripe / Yup
 
 特別說明：
